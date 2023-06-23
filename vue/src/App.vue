@@ -14,12 +14,27 @@ export default {
   },
   methods: {
     deleteTask(idx) {
-      console.log(idx);
+
+      const url = 'http://localhost/tmp/php/deleteTask.php';
+      const data = { "index": index };
+      const headers = {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      };
+      axios.post(url, data, headers)
+        .then(res => {
+
+          const data = res.data;
+          this.students = data;
+        });
+
     },
     addTask() {
-
+      // crea delle costanti che poi andrano a essere le "componenti" della richiesta axios.post
+      // url del file da cui andare a prendere le info
       const url = 'http://localhost/php-todo-list-json/php/postTask.php';
+      // la variabile che mi serve nel .php da aggiungere nel json
       const data = this.newtask;
+      // una cosa "standard" per far funzionare le richieste POST 
       const headers = {
         headers: { 'Content-Type': 'multipart/form-data' }
       };
@@ -29,7 +44,9 @@ export default {
           .then(res => {
 
             console.log(res.data);
+            // prendo il contenuto della richiesta axios e lo sostituisco al mio array
             this.myListTask = res.data;
+            // reinposto a stringa vuota il v-model dell'input
             this.newtask.text = "";
           });
       }
