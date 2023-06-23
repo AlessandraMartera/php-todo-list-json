@@ -15,8 +15,10 @@ export default {
   methods: {
     deleteTask(idx) {
 
-      const url = 'http://localhost/tmp/php/deleteTask.php';
-      const data = { "index": index };
+      // console.log(idx);
+
+      const url = 'http://localhost/php-todo-list-json/php/deleteTask.php';
+      const data = { 'index': idx };
       const headers = {
         headers: { 'Content-Type': 'multipart/form-data' }
       };
@@ -24,7 +26,7 @@ export default {
         .then(res => {
 
           const data = res.data;
-          this.students = data;
+          this.myListTask = data;
         });
 
     },
