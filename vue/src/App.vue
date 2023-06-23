@@ -13,6 +13,15 @@ export default {
     }
   },
   methods: {
+    check(idx) {
+
+      if (this.myListTask[idx].check === "no") {
+        this.myListTask[idx].check = "yes";
+      } else {
+        this.myListTask[idx].check = "no";
+      }
+      console.log(this.myListTask[idx].check);
+    },
     deleteTask(idx) {
 
       // console.log(idx);
@@ -70,7 +79,8 @@ export default {
   <h1>to Do list</h1>
   <div class="container">
     <ul>
-      <li v-for="(task, idx) in myListTask" :key="idx">{{ task.text }}
+      <li v-for="(task, idx) in myListTask" :key="idx" @click="check(idx)"
+        :class="(task.check === 'no') ? '' : 'checked'">{{ task.text }}
         <button @click="deleteTask(idx)"> X </button>
       </li>
 
@@ -110,11 +120,17 @@ li {
   border-bottom: 1px solid gray;
   padding: 5px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
 
   button {
     width: 50px;
     height: 50px;
   }
+}
+
+.checked {
+  text-decoration: line-through;
 }
 </style>
