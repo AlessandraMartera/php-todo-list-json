@@ -96,8 +96,11 @@ export default {
   <h1>to Do list</h1>
   <div class="container">
     <ul>
-      <li v-for="(task, idx) in myListTask" :key="idx" @click="check(idx)" :class="(task.check) ? 'checked' : ''">{{
-        task.text }}
+      <li v-for="(task, idx) in myListTask" :key="idx" @click="check(idx)">
+        <span :class="(task.check) ? 'checked' : ''">
+          {{ task.text }}
+        </span>
+
         <button @click="deleteTask(idx)"> X </button>
       </li>
 
