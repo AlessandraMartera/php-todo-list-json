@@ -7,27 +7,44 @@ export default {
       myListTask: [],
 
       newtask: {
-        "text": "",
-        "check": "no"
+        text: "",
       }
     }
   },
   methods: {
     check(idx) {
 
-      if (this.myListTask[idx].check === "no") {
-        this.myListTask[idx].check = "yes";
-      } else {
-        this.myListTask[idx].check = "no";
-      }
+      // if (this.myListTask[idx].check === "no") {
+      //   this.myListTask[idx].check = "yes";
+      // } else {
+      //   this.myListTask[idx].check = "no";
+      // }
+
       console.log(this.myListTask[idx].check);
+
+      const url = 'http://localhost/php-todo-list-json/php/check.php';
+      const data = { index: idx };
+      const headers = {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      };
+
+      axios.post(url, data, headers)
+        .then(res => {
+
+          const data = res.data;
+          this.myListTask = data;
+          console.log(res.data);
+        })
+        .catch(error => {
+          console.log('error', error);
+        });
     },
     deleteTask(idx) {
 
       // console.log(idx);
 
       const url = 'http://localhost/php-todo-list-json/php/deleteTask.php';
-      const data = { 'index': idx };
+      const data = { index: idx };
       const headers = {
         headers: { 'Content-Type': 'multipart/form-data' }
       };
@@ -79,8 +96,8 @@ export default {
   <h1>to Do list</h1>
   <div class="container">
     <ul>
-      <li v-for="(task, idx) in myListTask" :key="idx" @click="check(idx)"
-        :class="(task.check === 'no') ? '' : 'checked'">{{ task.text }}
+      <li v-for="(task, idx) in myListTask" :key="idx" @click="check(idx)" :class="(task.check) ? 'checked' : ''">{{
+        task.text }}
         <button @click="deleteTask(idx)"> X </button>
       </li>
 

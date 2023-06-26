@@ -7,7 +7,8 @@
     header('Content-Type: application/json');
 
     // mi prendo l'oggetto nuova task da app.vue
-    $newtask = $_POST;
+    $data = $_POST;
+    $data["check"] = false;
 
     // prendo da data.json l'array di oggetti
     $tasksStr = file_get_contents("data.json");
@@ -15,7 +16,7 @@
     $tasks = json_decode($tasksStr);
 
     // prendo l'array e ci pusho dentro l'oggetto nuova task preso da APP.vue tramite il $_POST
-    $tasks[] = $newtask;
+    $tasks[] = $data;
 
     // ritrasfonrmo i dati in json
     $tasksStr = json_encode($tasks);
